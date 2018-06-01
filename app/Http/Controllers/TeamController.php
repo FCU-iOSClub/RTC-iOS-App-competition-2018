@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\PorposalUpload;
 use App\TeamMember;
 use App\Univercity;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Notification;
 use Setting;
 use Storage;
-use Notification;
-use App\Notifications\PorposalUpload;
 
 class TeamController extends Controller
 {
@@ -231,6 +231,7 @@ class TeamController extends Controller
             $request->proposal->storeAs(auth()->user()->id, 'proposal.pdf');
             Notification::route('mail', 'ahkui@mail.fcu.edu.tw')
                         ->notify(new PorposalUpload(auth()->user()));
+
             return redirect()->back()->with('msg', '成功上傳！');
         }
     }
